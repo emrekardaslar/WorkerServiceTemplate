@@ -1,0 +1,34 @@
+version: '3.4'
+
+services:
+  worker:
+    build:
+      context: .
+      dockerfile: ./src/WorkerServiceTemp.Worker/Dockerfile
+    depends_on:
+      - sqlserver
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=sqlserver,1433;Database=WorkerServiceTempDB;User Id=sa;Password=pw;TrustServerCertificate=True;
+    networks:
+      - worker-network
+    container_name: worker-service
+
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=pw
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql_data:/var/opt/mssql
+    networks:
+      - worker-network
+    container_name: sqlserver
+
+networks:
+  worker-network:
+    driver: bridge
+
+volumes:
+  sql_data:

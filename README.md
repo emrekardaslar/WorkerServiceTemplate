@@ -74,3 +74,11 @@ dotnet run --project src/WorkerServiceTemp.Worker/WorkerServiceTemp.Worker.cspro
 ### Step 6: Test the Worker
 
 Once the worker service is running, it will fetch the data from the MyEntities table every 5 seconds and print the results to the console.
+
+### Step 7: Use docker compose (Optional)
+
+You can use docker compose file to start the services.
+
+```bash
+docker-compose up --build
+```
